@@ -1,0 +1,36 @@
+name: Hello World CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run Build Step
+        run: echo "Building the application..."
+
+  test:
+    name: Test Job
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run Script
+        run: bash hello.sh
+      - name: Run Test Step
+        run: echo "Tests passed successfully!"
+
+  deploy:
+    name: Deploy Job
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Run Deploy Step
+        run: echo "Deploying the application..."
